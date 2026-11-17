@@ -54,11 +54,11 @@ function seatParts() {
   const black = [];
   const chrome = [];
 
-  const TILT = 0.145;
+  const TILT = 0.062;
 
   // --- red velvet back body (the rim around the black shell) --------------
   red.push(
-    xform(new RoundedBoxGeometry(0.65, 0.79, 0.13, 4, 0.058), {
+    xform(new RoundedBoxGeometry(0.7, 0.79, 0.105, 4, 0.05), {
       rx: TILT, y: 0.93, z: 0.2,
     })
   );
@@ -100,13 +100,13 @@ function seatParts() {
   // big inset panel on the rear face
   black.push(
     xform(new RoundedBoxGeometry(0.525, 0.52, 0.06, 4, 0.06), {
-      rx: TILT, y: 0.985, z: 0.246,
+      rx: TILT, y: 1.008, z: 0.246,
     })
   );
   // dark reveal between the inset and the red rim
   black.push(
     xform(new RoundedBoxGeometry(0.57, 0.565, 0.03, 3, 0.016), {
-      rx: TILT, y: 0.985, z: 0.258,
+      rx: TILT, y: 1.008, z: 0.258,
     })
   );
   // lower back shell under the red rim
@@ -232,7 +232,7 @@ export function buildSeating({ rows = 11, perRow = 22, pitch = 0.645, rowPitch =
     for (let s = 0; s < perRow; s++) {
       const x = (s - (perRow - 1) / 2) * pitch + stagger;
       dummy.position.set(x, y, z);
-      dummy.rotation.set(0, (rand() - 0.5) * 0.02, (rand() - 0.5) * 0.008);
+      dummy.rotation.set(0, (rand() - 0.5) * 0.045, (rand() - 0.5) * 0.012);
       dummy.scale.setScalar(0.99 + rand() * 0.02);
       dummy.updateMatrix();
       redMesh.setMatrixAt(i, dummy.matrix);

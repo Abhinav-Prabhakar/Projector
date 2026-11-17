@@ -154,8 +154,8 @@ export function seatFabric() {
       const perf = Math.max(0, 1 - Math.hypot(px, py) / 2.6);
       const tone = 0.78 + broad[i] * 0.26 + (fiber[i] - 0.5) * 0.1 + weave * 0.045 - perf * 0.24;
       const r = 214 * tone;
-      const g = 24 * tone + broad[i] * 6;
-      const b = 20 * tone + broad[i] * 4;
+      const g = 33 * tone + broad[i] * 7;
+      const b = 28 * tone + broad[i] * 5;
       ad[i * 4] = Math.min(255, r);
       ad[i * 4 + 1] = Math.min(255, g);
       ad[i * 4 + 2] = Math.min(255, b);

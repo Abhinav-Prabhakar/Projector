@@ -57,7 +57,7 @@ band by band — apron luminance, seat-field percentiles, red-channel saturation
 
 ![Seat detail](docs/seats.jpg)
 
-<div align="center"><sub>1,012 instanced seats · velvet sheen · baked per-vertex occlusion · black shell insets</sub></div>
+<div align="center"><sub>276 instanced seats · velvet sheen · baked per-vertex occlusion · black shell insets</sub></div>
 
 ---
 
@@ -94,9 +94,9 @@ Drag to look around · scroll to step closer · `1`–`4` presets · `L` lights 
 
 | | |
 | :-- | :-- |
-| Draw calls | ~120 |
-| Triangles | ~1.1 M |
-| Lights | 28 |
+| Draw calls | ~100 |
+| Triangles | 6.6 M / frame |
+| Lights | 29 |
 | Frame | 1600 × 1052 @ 60 fps (Apple GPU, Metal/ANGLE) |
 
 <div align="center"><sub>Built with three.js. No assets were harmed.</sub></div>

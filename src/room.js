@@ -15,7 +15,7 @@ export const DIM = {
   screenW: 11.95,
   screenH: 6.0,
   screenBottom: 4.15,
-  stageY: 2.3,
+  stageY: 2.45,
   stageFrontZ: -6.35,
   audFloorStartZ: -5.5,
   drapeZ: -13.72,
