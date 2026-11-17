@@ -408,6 +408,7 @@ export function buildRoom() {
 
   return {
     group: g,
+    wallMat,
     apronGlow,
     screen,
     screenMat,

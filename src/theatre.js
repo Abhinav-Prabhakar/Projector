@@ -376,7 +376,9 @@ export function createTheatre(scene, renderer, camera) {
     apronLight.intensity = 19 * state.stage;
     rearDeck.intensity = 46 * state.stage;
     for (const l of legRakes) l.intensity = 78 * state.stage;
-    for (const l of ceilingGlows) l.intensity = 8 * state.stage;
+    const houseUp = Math.max(0, state.house - 0.95);
+    room.wallMat.emissiveIntensity = 0.07 + 0.16 * houseUp;
+    for (const l of ceilingGlows) l.intensity = 8 * state.stage + 30 * houseUp;
     stageWash.intensity = 0.8 * state.stage;
     drapeWash.intensity = 40 * state.stage;
     screenBounce.intensity = 5.4 * state.screen;

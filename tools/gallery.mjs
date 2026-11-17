@@ -9,8 +9,8 @@ await page.screenshot({ path: 'docs/hero.png', timeout: 120000 });
 // lighting variations for the gallery
 const shots = [
   ['screen-on', { screen: 1, stage: 1, beam: 0.42 }],
-  ['screen-off', { screen: 0.05, stage: 0.55, exits: 1, beam: 0 }],
-  ['houselights', { screen: 0.25, stage: 1, house: 1.6, cove: 1.2, beam: 0.1 }],
+  ['screen-off', { screen: 0, stage: 0.3, house: 0.25, cove: 0.9, beam: 0 }],
+  ['houselights', { screen: 0.15, stage: 1, house: 2.2, cove: 1.5, beam: 0.06 }],
 ];
 for (const [name, p] of shots) {
   await page.evaluate((p) => { Object.assign(window.__theatre.target, p); }, p);

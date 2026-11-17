@@ -75,8 +75,8 @@ band by band — apron luminance, seat-field percentiles, red-channel saturation
 
 <table>
 <tr>
-<td width="50%"><img src="docs/screen-off.jpg" alt="Screen off"><div align="center"><sub><b>Screen down</b> — exit signs carry the room</sub></div></td>
-<td width="50%"><img src="docs/houselights.jpg" alt="House lights"><div align="center"><sub><b>House up</b> — stalls, rakes and aisles</sub></div></td>
+<td width="50%"><img src="docs/screen-off.jpg" alt="Screen off"><div align="center"><sub><b>Screen down</b> — only the exits</sub></div></td>
+<td width="50%"><img src="docs/houselights.jpg" alt="House lights"><div align="center"><sub><b>House up</b> — every practical on</sub></div></td>
 </tr>
 </table>
 
