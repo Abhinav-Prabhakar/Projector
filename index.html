@@ -1,0 +1,145 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
+<title>Projector One — Screen Eleven</title>
+<meta name="theme-color" content="#000000" />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=JetBrains+Mono:wght@300;400;500&display=swap" rel="stylesheet" />
+<link rel="stylesheet" href="./src/style.css" />
+</head>
+<body>
+  <canvas id="stage"></canvas>
+
+  <div id="veil"></div>
+
+  <header id="brand">
+    <div class="brand-mark">
+      <span class="brand-dot"></span>
+      <span class="brand-name">PROJECTOR ONE</span>
+    </div>
+    <div class="brand-sub">SCREEN ELEVEN &nbsp;·&nbsp; 02:14</div>
+  </header>
+
+  <div id="hud">
+    <div class="hud-row"><span class="hud-label">FPS</span><span id="fps">60</span></div>
+    <div class="hud-row"><span class="hud-label">RES</span><span id="res">—</span></div>
+  </div>
+
+  <div id="hint">Drag to look around &nbsp;·&nbsp; scroll to step closer</div>
+
+  <button id="open-panel" aria-label="Open house controls">
+    <span class="open-knob"></span> Controls
+  </button>
+
+  <div id="panel" class="open">
+    <button id="panel-toggle" aria-label="Toggle controls">
+      <span class="tl"></span><span class="tl"></span><span class="tl"></span>
+    </button>
+
+    <div class="panel-inner">
+      <div class="panel-head">
+        <div>
+          <div class="eyebrow">HOUSE CONTROL</div>
+          <h1>Auditorium <em>11</em></h1>
+        </div>
+        <div class="panel-state"><span id="state-dot"></span><span id="state-name">SHOWTIME</span></div>
+      </div>
+
+      <div class="presets" role="group" aria-label="Presets">
+        <button data-preset="showtime" class="on">Showtime</button>
+        <button data-preset="intermission">Intermission</button>
+        <button data-preset="house">House</button>
+        <button data-preset="blackout">Blackout</button>
+      </div>
+
+      <div class="section">
+        <div class="section-title"><span>Screen</span><span class="rule"></span></div>
+        <div class="ctl">
+          <label for="screen">Screen brightness</label>
+          <input id="screen" data-param="screen" type="range" min="0" max="2" step="0.01" value="1" />
+          <output for="screen">100</output>
+        </div>
+        <div class="ctl">
+          <label for="spots">Stage wash</label>
+          <input id="spots" data-param="stage" type="range" min="0" max="2" step="0.01" value="1" />
+          <output for="spots">100</output>
+        </div>
+      </div>
+
+      <div class="section">
+        <div class="section-title"><span>House</span><span class="rule"></span></div>
+        <div class="ctl">
+          <label for="house">House lights</label>
+          <input id="house" data-param="house" type="range" min="0" max="2.5" step="0.01" value="0.9" />
+          <output for="house">36</output>
+        </div>
+        <div class="ctl">
+          <label for="cove">Cove lighting</label>
+          <input id="cove" data-param="cove" type="range" min="0" max="2" step="0.01" value="0.8" />
+          <output for="cove">40</output>
+        </div>
+        <div class="ctl">
+          <label for="exits">Exit signs</label>
+          <input id="exits" data-param="exits" type="range" min="0" max="2" step="0.01" value="1" />
+          <output for="exits">50</output>
+        </div>
+        <div class="ctl">
+          <label for="beam">Projector beam</label>
+          <input id="beam" data-param="beam" type="range" min="0" max="2" step="0.01" value="0.24" />
+          <output for="beam">12</output>
+        </div>
+      </div>
+
+      <div class="section">
+        <div class="section-title"><span>Drapery</span><span class="rule"></span></div>
+        <div class="ctl">
+          <label for="sway">Curtain sway</label>
+          <input id="sway" data-param="sway" type="range" min="0" max="2.5" step="0.01" value="1" />
+          <output for="sway">100</output>
+        </div>
+        <div class="ctl">
+          <label for="breeze">Breeze speed</label>
+          <input id="breeze" data-param="breeze" type="range" min="0" max="2.5" step="0.01" value="1" />
+          <output for="breeze">100</output>
+        </div>
+      </div>
+
+      <div class="section">
+        <div class="section-title"><span>Camera &amp; Grade</span><span class="rule"></span></div>
+        <div class="ctl">
+          <label for="exposure">Exposure</label>
+          <input id="exposure" data-param="exposure" type="range" min="0.4" max="2" step="0.01" value="1.06" />
+          <output for="exposure">106</output>
+        </div>
+        <div class="ctl">
+          <label for="bloom">Lens bloom</label>
+          <input id="bloom" data-param="bloom" type="range" min="0" max="2.5" step="0.01" value="1" />
+          <output for="bloom">100</output>
+        </div>
+        <div class="ctl">
+          <label for="grain">Film grain</label>
+          <input id="grain" data-param="grain" type="range" min="0" max="2" step="0.01" value="1" />
+          <output for="grain">100</output>
+        </div>
+        <div class="ctl">
+          <label for="haze">Haze</label>
+          <input id="haze" data-param="haze" type="range" min="0" max="2.5" step="0.01" value="1" />
+          <output for="haze">100</output>
+        </div>
+      </div>
+
+      <div class="panel-foot">
+        <button id="reset-cam" class="ghost">Reset view</button>
+        <button id="drift" class="ghost on">Drift</button>
+        <button id="hide-ui" class="ghost">Hide UI</button>
+      </div>
+      <div class="panel-keys">1–4 presets &nbsp;·&nbsp; L lights &nbsp;·&nbsp; B beam &nbsp;·&nbsp; H UI &nbsp;·&nbsp; R view</div>
+    </div>
+  </div>
+
+  <script type="module" src="./src/main.js"></script>
+</body>
+</html>

@@ -1,0 +1,12 @@
+import { chromium } from 'playwright-core';
+const exe = `${process.env.HOME}/Library/Caches/ms-playwright/chromium-1254/chrome-mac-arm64/Google Chrome for Testing.app/Contents/MacOS/Google Chrome for Testing`;
+const browser = await chromium.launch({ executablePath: exe, args: ['--use-angle=metal','--enable-gpu','--ignore-gpu-blocklist'], headless: true });
+const page = await browser.newPage({ viewport: { width: 1180, height: 776 }, deviceScaleFactor: 1 });
+page.on('pageerror', e => console.log('ERR', e.message.slice(0,400)));
+await page.goto('http://localhost:5199/?ui=0&fixed=1', { waitUntil: 'networkidle' });
+await page.waitForTimeout(2500);
+console.log(await page.evaluate(() => window.__theatre.theatre.drapery.children.map((c,i) => ({ i, color: c.material.color.getHexString(), side: c.material.side, geo: c.geometry.parameters.width.toFixed(2)+'x'+c.geometry.parameters.height.toFixed(2), z: c.position.z.toFixed(2) }))));
+await page.evaluate(() => { const m = window.__theatre.theatre.drapery.children[3].material; m.color.set(0xff0000); m.sheen = 0; m.needsUpdate = true; });
+await page.waitForTimeout(600);
+await page.screenshot({ path: 'shots/probe_skirtred.png', timeout: 90000 });
+await browser.close();

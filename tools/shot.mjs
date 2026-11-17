@@ -1,0 +1,21 @@
+import { chromium } from 'playwright-core';
+import fs from 'node:fs';
+const exe = `${process.env.HOME}/Library/Caches/ms-playwright/chromium-1254/chrome-mac-arm64/Google Chrome for Testing.app/Contents/MacOS/Google Chrome for Testing`;
+const url = process.argv[2] || 'http://localhost:5199/';
+const out = process.argv[3] || 'shots/shot.png';
+const scale = parseFloat(process.argv[4] || '2');
+const browser = await chromium.launch({ executablePath: exe, args: ['--use-angle=metal','--enable-gpu','--ignore-gpu-blocklist'], headless: true });
+const page = await browser.newPage({ viewport: { width: 1180, height: 776 }, deviceScaleFactor: scale });
+page.on('console', m => { if (m.type()==='error'||m.type()==='warning') console.log('PAGE', m.type(), m.text().slice(0,200)); });
+page.on('pageerror', e => console.log('PAGEERROR', e.message.slice(0,300)));
+await page.goto(url, { waitUntil: 'networkidle' });
+await page.waitForTimeout(3500);
+fs.mkdirSync(out.split('/').slice(0,-1).join('/') || '.', { recursive: true });
+await page.screenshot({ path: out, timeout: 120000, animations: 'disabled' });
+const stats = await page.evaluate(() => {
+  const w = window.__theatre;
+  if (!w) return null;
+  return { calls: w.renderer.info.render.calls, tris: w.renderer.info.render.triangles, fps: document.getElementById('fps').textContent, res: document.getElementById('res').textContent };
+});
+console.log(stats);
+await browser.close();
