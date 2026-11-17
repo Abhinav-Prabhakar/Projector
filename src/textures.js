@@ -153,9 +153,9 @@ export function seatFabric() {
       const px = (x % 32) - 16, py = (y % 32) - 16;
       const perf = Math.max(0, 1 - Math.hypot(px, py) / 2.6);
       const tone = 0.78 + broad[i] * 0.26 + (fiber[i] - 0.5) * 0.1 + weave * 0.045 - perf * 0.24;
-      const r = 140 * tone;
-      const g = 17 * tone + broad[i] * 6;
-      const b = 17 * tone + broad[i] * 4;
+      const r = 214 * tone;
+      const g = 24 * tone + broad[i] * 6;
+      const b = 20 * tone + broad[i] * 4;
       ad[i * 4] = Math.min(255, r);
       ad[i * 4 + 1] = Math.min(255, g);
       ad[i * 4 + 2] = Math.min(255, b);
@@ -362,12 +362,12 @@ export function screenSurface() {
   // base vertical falloff — bright, near-white, warm only at the hem
   const g = ctx.createLinearGradient(0, 0, 0, H);
   g.addColorStop(0.0, '#ffffff');
-  g.addColorStop(0.18, '#fdfbf6');
-  g.addColorStop(0.35, '#e9e3d5');
-  g.addColorStop(0.52, '#c4bdad');
-  g.addColorStop(0.70, '#9e9787');
-  g.addColorStop(0.85, '#847d6f');
-  g.addColorStop(1.0, '#7a736a');
+  g.addColorStop(0.14, '#fffdf7');
+  g.addColorStop(0.30, '#efe8da');
+  g.addColorStop(0.48, '#b4ab99');
+  g.addColorStop(0.68, '#8b8375');
+  g.addColorStop(0.86, '#867f72');
+  g.addColorStop(1.0, '#7b746a');
   ctx.fillStyle = g;
   ctx.fillRect(0, 0, W, H);
 
@@ -450,35 +450,56 @@ export function exitSign() {
 }
 
 
-/* Baked wash for the stage apron. The deck sits right under the screen:
-   it is grazed at the far end and fully lit at the front, so this is the
-   inverse gradient the real lights need, with the sides falling away. */
+/* Baked wash for the stage apron. The deck is grazed at the far end and
+   fully lit at the front, but the real fixtures pool their light in the
+   middle, so this plane supplies the missing ends and evens the band out. */
 export function apronWash() {
-  const W = 512, H = 256;
+  const W = 256, H = 256;
   const c = makeCanvas(W, H);
   const ctx = c.getContext('2d');
-  ctx.fillStyle = '#000';
-  ctx.fillRect(0, 0, W, H);
   const img = ctx.createImageData(W, H);
   const d = img.data;
   for (let y = 0; y < H; y++) {
-    // v = 1 sits at the screen end of the deck
-    const v = y / (H - 1);
-    let a = Math.min(1, Math.max(0, (v - 0.08) / 0.62));
-    a = a * a * (3 - 2 * a);
-    a *= 1 - 0.55 * Math.pow(Math.max(0, v - 0.72) / 0.28, 2);
+    // canvas row 0 is the screen end of the deck
+    const t = 1 - y / (H - 1);
+    const a = 0.24 + 0.34 * Math.pow(t, 1.5);
     for (let x = 0; x < W; x++) {
       const u = Math.abs(x / (W - 1) - 0.5) * 2;
-      const side = 1 - 0.34 * u * u;
+      const side = 1 - 0.15 * u * u;
       const i = (y * W + x) * 4;
       d[i] = 255;
-      d[i + 1] = 246;
-      d[i + 2] = 228;
-      d[i + 3] = 255 * Math.max(0, a * side);
+      d[i + 1] = 234;
+      d[i + 2] = 186;
+      d[i + 3] = 255 * Math.min(1, a * side);
     }
   }
   ctx.putImageData(img, 0, 0);
   return tex(c, 1, 1, false, 2);
+}
+
+/* Warm vertical bounce on the walls: bright at the skirting, gone by the
+   cove. Keeps the room's form readable without lifting the seat blacks. */
+export function wallBounce() {
+  const W = 4, H = 256;
+  const c = makeCanvas(W, H);
+  const ctx = c.getContext('2d');
+  const img = ctx.createImageData(W, H);
+  const d = img.data;
+  for (let y = 0; y < H; y++) {
+    const v = 1 - y / (H - 1);         // 0 at the floor, 1 at the cove
+    let a = Math.pow(1 - v, 1.35);
+    a *= 0.82 + 0.18 * Math.sin(v * 7.0);
+    const l = Math.max(0, a);
+    for (let x = 0; x < W; x++) {
+      const i = (y * W + x) * 4;
+      d[i] = 255 * l;
+      d[i + 1] = 232 * l;
+      d[i + 2] = 198 * l;
+      d[i + 3] = 255;
+    }
+  }
+  ctx.putImageData(img, 0, 0);
+  return tex(c, 1, 1, false, 1);
 }
 
 /* ------------------------------------------------------------------ *

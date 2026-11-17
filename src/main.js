@@ -150,7 +150,7 @@ const rig = new Rig(camera);
 /* ----------------------------------------------------------------- controls */
 const target = {
   screen: 1, stage: 1, house: 0.9, cove: 0.8, exits: 1, beam: 0.24,
-  sway: 1, breeze: 1, exposure: 1.08, bloom: 0.72, grain: 1, haze: 1, dof: 0.55, focus: 22.6, debugDepth: 0,
+  sway: 1, breeze: 1, exposure: 1.08, bloom: 0.42, grain: 1, haze: 1, dof: 0.45, focus: 13.0, debugDepth: 0,
 };
 const live = { ...target };
 

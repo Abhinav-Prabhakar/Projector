@@ -33,7 +33,7 @@ function bakeAO(geo, power = 1) {
     const y = pos.getY(i);
     const ny = nrm.getY(i);
     const up = Math.max(0, ny);
-    let v = 0.10 + up * 0.2 + THREE.MathUtils.smoothstep(y, 0.62, 1.34) * 0.5;
+    let v = 0.075 + up * 0.14 + THREE.MathUtils.smoothstep(y, 0.62, 1.34) * 0.52;
     if (y < 0.6) v = Math.max(v, 0.5 + up * 0.18);
     const g = Math.min(1, Math.max(0.08, v)) ** power;
     col[i * 3] = g;
@@ -58,8 +58,8 @@ function seatParts() {
 
   // --- red velvet back body (the rim around the black shell) --------------
   red.push(
-    xform(new RoundedBoxGeometry(0.65, 0.82, 0.17, 4, 0.062), {
-      rx: TILT, y: 0.945, z: 0.2,
+    xform(new RoundedBoxGeometry(0.65, 0.79, 0.13, 4, 0.058), {
+      rx: TILT, y: 0.93, z: 0.2,
     })
   );
   // fat top roll that wraps over the back
@@ -99,14 +99,14 @@ function seatParts() {
   // --- black shell --------------------------------------------------------
   // big inset panel on the rear face
   black.push(
-    xform(new RoundedBoxGeometry(0.585, 0.565, 0.062, 4, 0.034), {
-      rx: TILT, y: 0.862, z: 0.282,
+    xform(new RoundedBoxGeometry(0.525, 0.52, 0.06, 4, 0.06), {
+      rx: TILT, y: 0.985, z: 0.246,
     })
   );
   // dark reveal between the inset and the red rim
   black.push(
-    xform(new RoundedBoxGeometry(0.615, 0.605, 0.028, 3, 0.012), {
-      rx: TILT, y: 0.862, z: 0.265,
+    xform(new RoundedBoxGeometry(0.57, 0.565, 0.03, 3, 0.016), {
+      rx: TILT, y: 0.985, z: 0.258,
     })
   );
   // lower back shell under the red rim
@@ -145,13 +145,13 @@ function seatParts() {
   // --- brushed seat number plaque + two studs ----------------------------
   chrome.push(
     xform(new RoundedBoxGeometry(0.048, 0.016, 0.008, 2, 0.004), {
-      y: 0.74, z: 0.318,
+      y: 0.78, z: 0.316,
     })
   );
   for (const s of [-1, 1]) {
     chrome.push(
       xform(new THREE.SphereGeometry(0.012, 10, 8), {
-        x: s * 0.23, y: 0.63, z: 0.318,
+        x: s * 0.19, y: 0.72, z: 0.316,
       })
     );
   }
@@ -169,22 +169,24 @@ export function buildSeating({ rows = 11, perRow = 22, pitch = 0.645, rowPitch =
   const redMat = new THREE.MeshPhysicalMaterial({
     map: fabric.map,
     normalMap: fabric.normalMap,
-    normalScale: new THREE.Vector2(0.62, 0.62),
+    normalScale: new THREE.Vector2(0.95, 0.95),
     roughnessMap: fabric.roughnessMap,
     roughness: 1.0,
     metalness: 0.0,
     color: 0xffffff,
     vertexColors: true,
-    sheen: 0.1,
-    sheenColor: new THREE.Color(0x7e1a0e),
+    sheen: 0.13,
+    sheenColor: new THREE.Color(0xa03424),
     sheenRoughness: 0.7,
   });
 
   const shellMat = new THREE.MeshPhysicalMaterial({
-    color: 0x06070a,
+    color: 0x010104,
     vertexColors: true,
-    roughness: 0.94,
+    roughness: 0.97,
     metalness: 0.0,
+    specularIntensity: 0.03,
+    envMapIntensity: 0.08,
     clearcoat: 0.0,
     clearcoatRoughness: 0.7,
   });
@@ -237,7 +239,7 @@ export function buildSeating({ rows = 11, perRow = 22, pitch = 0.645, rowPitch =
       blackMesh.setMatrixAt(i, dummy.matrix);
       chromeMesh.setMatrixAt(i, dummy.matrix);
 
-      const v = 0.72 + rand() * 0.28;
+      const v = 0.52 + rand() * 0.5;
       tint.setRGB(v * 1.02, v * 0.9, v * 0.92);
       redMesh.setColorAt(i, tint);
       const b = 0.8 + rand() * 0.35;

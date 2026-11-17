@@ -9,6 +9,6 @@ export default defineConfig({
     assetsInlineLimit: 100000000,
     cssCodeSplit: false,
     chunkSizeWarningLimit: 8000,
-    minify: 'esbuild',
+    minify: 'oxc',
   },
 });

@@ -208,10 +208,10 @@ export function createTheatre(scene, renderer, camera) {
   scene.add(drapery);
 
   const seating = buildSeating({
-    rows: 9,
+    rows: 12,
     perRow: 23,
     pitch: 0.78,
-    rowPitch: 1.15,
+    rowPitch: 1.0,
     frontZ: DIM.audFloorStartZ - 0.82,
     floorY: (z) => DIM.floorY(z),
   });
@@ -220,7 +220,7 @@ export function createTheatre(scene, renderer, camera) {
   /* ---------------------------------------------------------------- lights */
   // The screen's spill, modelled as a soft spot so it washes the seats and
   // not the drapery hanging in the screen plane.
-  const screenLight = new THREE.SpotLight(0xf2f0e2, 92, 40, 1.05, 1.0, 1.05);
+  const screenLight = new THREE.SpotLight(0xfff0d8, 84, 40, 1.05, 1.0, 1.05);
   screenLight.position.set(0, DIM.screenBottom + DIM.screenH * 0.22, DIM.screenZ + 1.1);
   screenLight.target.position.set(0, 1.1, 2.0);
   scene.add(screenLight, screenLight.target);
@@ -232,9 +232,9 @@ export function createTheatre(scene, renderer, camera) {
 
   // house key: a warm practical from the rear of the auditorium, so the
   // seating falls off into the dark towards the screen like the reference
-  const key = new THREE.SpotLight(0xffd9ac, 350, 26, 0.62, 0.9, 1.3);
-  key.position.set(0, 10.4, 4.6);
-  key.target.position.set(0, 0.9, 1.0);
+  const key = new THREE.SpotLight(0xffd9ac, 132, 26, 0.62, 0.92, 1.25);
+  key.position.set(0, 9.8, 4.4);
+  key.target.position.set(0, 1.1, 1.2);
   key.castShadow = true;
   key.shadow.mapSize.set(2048, 2048);
   key.shadow.camera.near = 1;
@@ -244,7 +244,7 @@ export function createTheatre(scene, renderer, camera) {
   key.shadow.radius = 6;
   scene.add(key, key.target);
 
-  const fill = new THREE.HemisphereLight(0x252b33, 0x070503, 0.03);
+  const fill = new THREE.HemisphereLight(0x252b33, 0x070503, 0.02);
   scene.add(fill);
 
   const spots = [];
@@ -362,17 +362,17 @@ export function createTheatre(scene, renderer, camera) {
     curtainSway.value = state.sway;
     curtainBreeze.value = state.breeze;
 
-    room.screenMat.emissiveIntensity = 1.38 * state.screen * (1 + Math.sin(time * 0.9) * 0.004);
-    screenLight.intensity = 92 * state.screen;
+    room.screenMat.emissiveIntensity = 1.5 * state.screen * (1 + Math.sin(time * 0.9) * 0.004);
+    screenLight.intensity = 84 * state.screen;
     // screen emissive also feeds a touch of local spill toward the stage
     screenLight.visible = state.screen > 0.01;
 
     houseArea.intensity = 0.045 * state.house;
-    key.intensity = 350 * state.house;
-    fill.intensity = 0.012 + state.house * 0.014;
+    key.intensity = 132 * state.house;
+    fill.intensity = 0.006 + state.house * 0.008;
 
     for (const s of spots) s.intensity = 30 * state.stage;
-    room.apronGlow.material.opacity = 0.075 * state.stage;
+    room.apronGlow.material.opacity = 0.22 * state.stage;
     apronLight.intensity = 19 * state.stage;
     rearDeck.intensity = 46 * state.stage;
     for (const l of legRakes) l.intensity = 78 * state.stage;
@@ -382,7 +382,7 @@ export function createTheatre(scene, renderer, camera) {
     screenBounce.intensity = 5.4 * state.screen;
     for (const l of coveLights) l.intensity = 0.18 * state.cove;
 
-    for (const m of exitFaceMats) m.emissiveIntensity = 2.2 * state.exits;
+    for (const m of exitFaceMats) m.emissiveIntensity = 3.8 * state.exits;
     for (const m of exitHalos) m.opacity = 0.1 * state.exits;
     for (const l of exitLights) l.intensity = 1.1 * state.exits;
     for (const p of room.pinSpots) {

@@ -38,9 +38,7 @@ function curtainMaterial({ freq, amp, phase, weight, color = 0x0e1013, sheen = 0
   };
 
   mat.onBeforeCompile = (shader) => {
-    if (typeof window !== 'undefined') window.__drapeCompiles = (window.__drapeCompiles || 0) + 1;
     Object.assign(shader.uniforms, uniforms);
-    if (typeof window !== 'undefined') window.__drapeHasFold = shader.vertexShader.includes('#include <common>') && shader.fragmentShader.includes('#include <color_fragment>');
     shader.vertexShader = shader.vertexShader
       .replace(
         '#include <common>',

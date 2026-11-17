@@ -2,7 +2,7 @@ import * as THREE from 'three';
 import { RoundedBoxGeometry } from 'three/addons/geometries/RoundedBoxGeometry.js';
 import {
   darkWood, concrete, plaster, carpet, screenSurface, exitSign,
-  glowSprite, brushedMetal, aisleRunner, apronWash, ceilingTile,
+  glowSprite, brushedMetal, aisleRunner, apronWash, ceilingTile, wallBounce,
 } from './textures.js';
 import { createCurtain } from './curtains.js';
 
@@ -15,12 +15,12 @@ export const DIM = {
   screenW: 11.95,
   screenH: 6.0,
   screenBottom: 4.15,
-  stageY: 2.5,
+  stageY: 2.3,
   stageFrontZ: -6.35,
   audFloorStartZ: -5.5,
   drapeZ: -13.72,
   floorY(z) {
-    return 0.9 + 0.105 * (z - this.audFloorStartZ);
+    return 1.1 + 0.105 * (z - this.audFloorStartZ);
   },
 };
 
@@ -39,6 +39,9 @@ export function buildRoom() {
   // near-black lacquered hardwood panelling
   const wallMat = new THREE.MeshPhysicalMaterial({
     map: wood.map,
+    emissive: 0x2a1f14,
+    emissiveMap: wallBounce(),
+    emissiveIntensity: 0.07,
     normalMap: wood.normalMap,
     normalScale: new THREE.Vector2(0.07, 0.07),
     color: 0x141210,
