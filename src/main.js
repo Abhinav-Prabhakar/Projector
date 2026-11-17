@@ -191,7 +191,8 @@ const maxDpr = Math.min(
   Math.max(1, Math.sqrt(4200000 / (window.innerWidth * window.innerHeight)))
 );
 let dpr = maxDpr;
-let samples = [];
+let frameEma = 1 / 60;
+let adaptClock = 0;
 let lastHud = 0;
 let frames = 0;
 let fpsTimer = 0;
@@ -248,18 +249,20 @@ function frame(now) {
     fpsTimer = 0;
   }
 
+  // resolution floats on a short EMA so a heavy frame is corrected in well
+  // under a second, and recovers just as quickly when the load drops
   if (!fixedQuality && !firstFrame) {
-    samples.push(dt);
-    if (samples.length >= 80) {
-      const avg = samples.reduce((a, b) => a + b, 0) / samples.length;
-      if (avg > 0.0178 && dpr > 1.1) {
-        dpr = Math.max(1, dpr - 0.2);
+    frameEma += (dt - frameEma) * 0.08;
+    adaptClock += dt;
+    if (adaptClock > 0.45) {
+      adaptClock = 0;
+      if (frameEma > 0.0192 && dpr > 0.86) {
+        dpr = Math.max(0.8, dpr * 0.92);
         applySize();
-      } else if (avg < 0.0132 && dpr < maxDpr) {
-        dpr = Math.min(maxDpr, dpr + 0.15);
+      } else if (frameEma < 0.0150 && dpr < maxDpr) {
+        dpr = Math.min(maxDpr, dpr * 1.04);
         applySize();
       }
-      samples = [];
     }
   }
 

@@ -170,17 +170,20 @@ const FINAL_FRAG = /* glsl */`
     vec2 px = vec2(1.0 / resolution.x, 1.0 / resolution.y);
     vec3 sharp = texture2D(tScene, duv).rgb;
 
-    // golden-angle disc: 16 taps, cheap and smooth
-    vec3 blur = vec3(0.0);
-    float wsum = 0.0;
-    for (int i = 0; i < 16; i++) {
-      float a = float(i) * 2.39996323;
-      float rr = sqrt((float(i) + 0.5) / 16.0);
-      vec2 o = vec2(cos(a), sin(a)) * rr * radius * vec2(1.0, resolution.x / resolution.y);
-      blur += texture2D(tScene, duv + o).rgb;
-      wsum += 1.0;
+    // golden-angle disc: 12 taps, and skipped where the frame is already sharp
+    vec3 blur = sharp;
+    if (radius > 0.4) {
+      float wsum = 0.0;
+      blur = vec3(0.0);
+      for (int i = 0; i < 12; i++) {
+        float a = float(i) * 2.39996323;
+        float rr = sqrt((float(i) + 0.5) / 12.0);
+        vec2 o = vec2(cos(a), sin(a)) * rr * radius * vec2(1.0, resolution.x / resolution.y);
+        blur += texture2D(tScene, duv + o).rgb;
+        wsum += 1.0;
+      }
+      blur /= wsum;
     }
-    blur /= wsum;
 
     vec3 col = mix(sharp, blur, smoothstep(0.02, 0.5, coc));
 
