@@ -20,6 +20,16 @@ Runs in the browser at 60 fps on a single HTML file.
 
 ---
 
+## From the front row
+
+![The stage](docs/stage.jpg)
+
+![Details](docs/details.jpg)
+
+<div align="center"><sub>Exit signage · pleated velour · the apron, worn and lit</sub></div>
+
+---
+
 ## The house console
 
 Ten live controls, four presets. Nothing is baked — every light, every curtain and every grade parameter moves in real time.
@@ -76,7 +86,7 @@ band by band — apron luminance, seat-field percentiles, red-channel saturation
 
 - **Everything procedural** — canvas textures for velvet, carpet, acoustic tile, concrete, brushed metal; geometry built from primitives at load time.
 - **HDR pipeline** — HalfFloat scene target → FXAA → soft-knee bright pass → dual-radius bloom → ACES composite with barrel distortion, chromatic aberration, vignette, halation, display-referred grain and a 16-tap depth-of-field.
-- **Real light** — 28 lights, one shadow caster, bounce and spill approximated by tuned spot and area lights plus a baked apron wash.
+- **Real light** — 29 lights, one shadow caster, bounce and spill approximated by tuned spot and area lights plus a baked apron wash.
 - **Deterministic** — a single paused timeline, seek-safe animation, no accumulated drift.
 - **Adaptive DPR** — resolution floats to hold 60 fps on the host GPU.
 

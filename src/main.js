@@ -278,6 +278,8 @@ if (hideUI) {
   ui.hide(true);
   document.getElementById('brand').style.display = 'none';
   document.getElementById('hud').style.display = 'none';
+  document.getElementById('hint').style.display = 'none';
+  document.getElementById('open-panel').style.display = 'none';
 }
 
 window.__theatre = { THREE, scene, camera, renderer, theatre, post, rig, live, target, ui };
