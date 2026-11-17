@@ -107,6 +107,10 @@ Drag to look around · scroll to step closer · `1`–`4` presets · `L` lights 
 | Draw calls | ~100 |
 | Triangles | 6.6 M / frame |
 | Lights | 29 |
-| Frame | 1600 × 1052 @ 60 fps (Apple GPU, Metal/ANGLE) |
+| Frame | 2592 × 1620 @ 60 fps (Apple M2, 2× display) |
+
+Resolution floats on a short moving average: the renderer drops its pixel ratio a step at a time when
+frames start missing, and climbs straight back when they don't. It settles at full resolution on the
+hardware above.
 
 <div align="center"><sub>Built with three.js. No assets were harmed.</sub></div>
